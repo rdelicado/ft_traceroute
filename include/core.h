@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:38:49 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/23 18:59:20 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/23 19:30:35 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void	print_help();
 
 /* Parsing functions */
 void	parse_arguments(t_args *args, int ac, char **av);
-
+void	validate_destination(t_args *args);
 #endif

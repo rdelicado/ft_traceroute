@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:37:19 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/23 19:23:21 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/23 19:28:31 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,7 @@ void parse_arguments(t_args *args, int ac, char **av)
 		printf("ft_traceroute: usage error: Destination address required\n");
 		exit(2);  // Exit code 2 para falta de destino
 	}
-	printf("%s\n", target);
+	args->target = target;
+	printf("%s\n", args->target);
+	validate_destination(args);
 }
