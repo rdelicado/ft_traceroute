@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:05:02 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/23 17:58:29 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:57:57 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,25 @@ void	print_help()
 	};
 	
 	for (int i = 0; help[i]; i++)
-		puts(help[i]);
+		printf("%s\n", help[i]);
 }
 
-static int	setup_handler(int ac, char **av)
+static int	setup_handler(t_args *args, int ac, char **av)
 {
 	if (geteuid() != 0) {
 		printf("ft_ping: This program must be run as root (RAW socket required)\n");
 		return 1;
 	};
-	parse_arguments(ac, av);
+	parse_arguments(args, ac, av);
 	return 0;
 }
 
 int	main(int ac, char **av)
 {
-	if (setup_handler(ac, av) != 0)
+	t_args args;
+	
+	if (setup_handler(&args, ac, av) != 0)
 		return 1;
-	(void)av;
 	
 	return 0;
 }
