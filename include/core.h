@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:38:49 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/23 19:30:35 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/24 13:12:04 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define CORE_H
 
 #include "types.h"
+#include <netinet/in.h>
+#include <netdb.h>
 
 /* Core functions */
 void	print_help();
@@ -21,4 +23,11 @@ void	print_help();
 /* Parsing functions */
 void	parse_arguments(t_args *args, int ac, char **av);
 void	validate_destination(t_args *args);
+
+/* Network functions */
+int		check_if_ip(char *target, struct in_addr *out_addr);
+int		find_hostname_ip(char *hostname, struct in_addr *out_addr);
+int		convert_ip_binary(t_args *args);
+
+
 #endif

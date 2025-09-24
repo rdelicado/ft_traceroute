@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:37:19 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/23 19:28:31 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/24 12:50:43 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void parse_arguments(t_args *args, int ac, char **av)
 	
 	// si no hay destino
 	if (ac < 2) {
-		printf("ft_traceroute: usage error: Destination address required\n");
+		print_help();
 		exit(1);
 	}
 
@@ -66,6 +66,20 @@ void parse_arguments(t_args *args, int ac, char **av)
 		}
 		i++;
 	}
+
+	/* Validar argumentos inválidos que empiecen con - */
+	i = 1;
+	while (i < ac)
+	{
+		if (av[i][0] == '-' && strcmp(av[i], "--help") != 0)
+		{
+			printf("ft_traceroute: invalid option -- '%s'\n", av[i]);
+			printf("Try 'ft_traceroute --help' for more information.\n");
+			exit(1);
+		}
+		i++;
+	}
+	
 	// inicializar args con valores por defecto
 	setup_default_values(args);
 
@@ -74,9 +88,9 @@ void parse_arguments(t_args *args, int ac, char **av)
 	if (target == NULL && !args->show_help)
 	{
 		printf("ft_traceroute: usage error: Destination address required\n");
+		//print_help();
 		exit(2);  // Exit code 2 para falta de destino
 	}
 	args->target = target;
-	printf("%s\n", args->target);
 	validate_destination(args);
 }

@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:05:02 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/23 18:57:57 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/24 13:12:04 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,19 @@ static int	setup_handler(t_args *args, int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	t_args args;
+	t_args	args;
 	
 	if (setup_handler(&args, ac, av) != 0)
-		return 1;
+		return (1);
+
+	if (!convert_ip_binary(&args))
+		exit(2);
 	
-	return 0;
+	/* Debug: mostrar información resuelta */
+	if (args.hostname)
+		printf("traceroute to %s (%s)\n", args.hostname, args.dest_ip);
+	else
+		printf("traceroute to %s\n", args.dest_ip);
+	
+	return (0);
 }

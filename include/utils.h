@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_traceroute.h                                    :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/23 17:02:20 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/24 12:10:11 by rdelicad         ###   ########.fr       */
+/*   Created: 2025/09/24 13:06:31 by rdelicad          #+#    #+#             */
+/*   Updated: 2025/09/24 13:08:13 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_TRACEROUTE
-#define FT_TRACEROUTE
+#ifndef UTIL_H
+#define UTIL_H
 
-#include "core.h"
 #include "types.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+/* Resolver utilities */
+int	convert_ip_binary(t_args *args);
+
 
 #endif
