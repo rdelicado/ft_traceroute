@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:05:02 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/24 13:12:04 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/25 09:38:55 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,8 @@ int	main(int ac, char **av)
 
 	if (!convert_ip_binary(&args))
 		exit(2);
-	
-	/* Debug: mostrar información resuelta */
-	if (args.hostname)
-		printf("traceroute to %s (%s)\n", args.hostname, args.dest_ip);
-	else
-		printf("traceroute to %s\n", args.dest_ip);
+			
+	run_traceroute(&args);
 	
 	return (0);
 }
