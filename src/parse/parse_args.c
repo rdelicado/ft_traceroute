@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:37:19 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/24 12:50:43 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:32:09 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void parse_arguments(t_args *args, int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (strcmp(av[i], "--help") == 0)
+		if (ft_strcmp(av[i], "--help") == 0)
 		{
 			if (ac != 2)
 			{
@@ -71,7 +71,7 @@ void parse_arguments(t_args *args, int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (av[i][0] == '-' && strcmp(av[i], "--help") != 0)
+		if (av[i][0] == '-' && ft_strcmp(av[i], "--help") != 0)
 		{
 			printf("ft_traceroute: invalid option -- '%s'\n", av[i]);
 			printf("Try 'ft_traceroute --help' for more information.\n");

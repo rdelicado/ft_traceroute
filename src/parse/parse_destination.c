@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 19:29:16 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/24 12:41:05 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:32:09 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	validate_destination(t_args *args)
 		printf("Cannot handle \"host\" cmdline arg `%s' on position 1 (argc 1)\n", args->target);
 		exit(2);
 	}
-	else if (strcmp(args->target, "255.255.255.255") == 0)
+	else if (ft_strcmp(args->target, "255.255.255.255") == 0)
 	{
 		printf("traceroute to 255.255.255.255 (255.255.255.255), 30 hops max, 60 byte packets\n");
 		printf("connect: Permiso denegado\n");

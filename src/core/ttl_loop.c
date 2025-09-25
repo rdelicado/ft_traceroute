@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:09:12 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/25 11:22:22 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:40:55 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,25 @@ static int process_hop(int send_sock, int recv_sock, t_args *args, int ttl)
 	int					responses;
 	struct timeval		start_time;
 	t_icmp_response		icmp_responses[3];
+	int					reached_dest;
 
 	// configurar direccion destino
-	memset(&dest_addr, 0, sizeof(dest_addr));
+	ft_memset(&dest_addr, 0, sizeof(dest_addr));
 	dest_addr.sin_family = AF_INET;
 	dest_addr.sin_addr = args->dest_addr;
 	dest_addr.sin_port = htons(33434 + ttl); // puerto UDP alto
 
+	// Llenar buffer con datos (como traceroute real)
+	ft_memset(buffer, 0x40 + ttl, sizeof(buffer));
+
 	responses = 0;
+	reached_dest = 0;
 	for (i = 0; i < 3; i++)
 	{
+		// Pequeña pausa entre paquetes (100ms)
+		if (i > 0)
+			usleep(100000);
+
 		// enviar paquete
 		gettimeofday(&start_time, NULL);
 		if (sendto(send_sock, buffer, sizeof(buffer), 0,
@@ -54,11 +63,10 @@ static int process_hop(int send_sock, int recv_sock, t_args *args, int ttl)
 		{
 			responses++;
 			
-			// Verificar si llegamos al destino
-			if (icmp_responses[i].from_addr.s_addr == args->dest_addr.s_addr)
+			// Verificar si llegamos al destino (ICMP Port Unreachable = tipo 3)
+			if (icmp_responses[i].icmp_type == 3)
 			{
-				display_hop(ttl, icmp_responses);
-				return (1); // Llegamos al destino
+				reached_dest = 1;
 			}
 		}
 	}
@@ -66,7 +74,8 @@ static int process_hop(int send_sock, int recv_sock, t_args *args, int ttl)
 	// Mostrar resultados
 	display_hop(ttl, icmp_responses);
 
-	return (0);
+	// Retornar 1 si llegamos al destino
+	return (reached_dest);
 }
 
 static void ttl_loop(int send_sock, int recv_sock, t_args *args)

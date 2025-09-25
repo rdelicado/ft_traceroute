@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:05:02 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/25 09:38:55 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:27:40 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_help()
 static int	setup_handler(t_args *args, int ac, char **av)
 {
 	if (geteuid() != 0) {
-		printf("ft_ping: This program must be run as root (RAW socket required)\n");
+		printf("ft_traceorute: This program must be run as root (RAW socket required)\n");
 		return 1;
 	};
 	parse_arguments(args, ac, av);

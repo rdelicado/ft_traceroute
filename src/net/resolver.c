@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 12:08:38 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/24 12:32:25 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:32:09 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	find_hostname_ip(char *hostname, struct in_addr *out_addr)
         return (0);
 
     /* Configurar hints para resolución DNS */
-    memset(&hints, 0, sizeof(hints));
+    ft_memset(&hints, 0, sizeof(hints));
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_DGRAM;
 

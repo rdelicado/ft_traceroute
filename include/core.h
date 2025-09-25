@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:38:49 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/25 11:20:37 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:32:09 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,8 @@ int		receive_icmp_response(int recv_sock, struct timeval *start_time, t_icmp_res
 void	display_hop(int ttl, t_icmp_response responses[3]);
 double	calculate_time(struct timeval *start, struct timeval *end);
 
+/* String utilities */
+int		ft_strcmp(const char *s1, const char *s2);
+void	*ft_memset(void *s, int c, size_t n);
 
 #endif
