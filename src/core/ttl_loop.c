@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:09:12 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/26 10:00:14 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:07:58 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int process_hop(int send_sock, int recv_sock, t_args *args, int ttl)
 	int					i;
 	int					responses;
 	struct timeval		start_time;
-	t_icmp_response		icmp_responses[3];
+	t_icmp_response		icmp_responses[10];
 	int					reached_dest;
 	int					port;
 
@@ -45,7 +45,7 @@ static int process_hop(int send_sock, int recv_sock, t_args *args, int ttl)
 
 	responses = 0;
 	reached_dest = 0;
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < args->num_probes; i++) // con flag -q
 	{
 		// Pequeña pausa entre paquetes (100ms)
 		if (i > 0)
@@ -74,7 +74,7 @@ static int process_hop(int send_sock, int recv_sock, t_args *args, int ttl)
 	}
 	
 	// Mostrar resultados
-	display_hop(ttl, icmp_responses);
+	display_hop(ttl, icmp_responses, args->num_probes);
 
 	// Retornar 1 si llegamos al destino
 	return (reached_dest);

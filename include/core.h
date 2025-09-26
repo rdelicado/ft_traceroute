@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:38:49 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/26 09:12:18 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:07:33 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int 	set_socket_ttl(int sockfd, int ttl);
 
 // icmp paquets
 int		receive_icmp_response(int recv_sock, struct timeval *start_time, t_icmp_response *response);
-void	display_hop(int ttl, t_icmp_response responses[3]);
+void	display_hop(int ttl, t_icmp_response responses[], int num_probes);
 double	calculate_time(struct timeval *start, struct timeval *end);
 
 /* libft utilities */

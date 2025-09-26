@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:37:19 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/26 09:51:54 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 10:58:59 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	setup_default_values(t_args *args)
 	args->target = NULL;
 	args->max_ttl = 30; // 30 saltos por defecto 
 	args->port = 33434; // Puerto UDP por defecto
+	args->num_probes = 3; // 3 paquetes por defecto
 }
 
 void parse_arguments(t_args *args, int ac, char **av)
@@ -72,6 +73,22 @@ void parse_arguments(t_args *args, int ac, char **av)
 			if (args->port + args->max_ttl > 65535)
 			{
 				printf("ft_traceroute: port + max_ttl (%d + %d) exceeds maximum allowed port (65535)\n", args->port, args->max_ttl);
+				exit(1);
+			}
+			i += 2;
+			continue;
+		}
+		else if (ft_strcmp(av[i], "-q") == 0)
+		{
+			if (i + 1 >= ac)
+			{
+				printf("ft_traceroute: option 'q' requires an argument\n");
+				exit(1);
+			}
+			args->num_probes = ft_atoi(av[i + 1]);
+			if (args->num_probes < 1 || args->num_probes > 10)
+			{
+				printf("ft_traceroute: invalid number of probes '%d'. Must be between 1 and 10\n", args->num_probes);
 				exit(1);
 			}
 			i += 2;

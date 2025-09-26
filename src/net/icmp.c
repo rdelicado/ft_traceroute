@@ -6,67 +6,58 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:53:49 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/26 09:01:53 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:06:05 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_traceroute.h"
 
-void	display_hop(int ttl, t_icmp_response responses[3])
+void	display_hop(int ttl, t_icmp_response responses[], int num_probes)
 {
-    int		i;
-    char	*first_ip;
-    int		any_valid;
+	int		i;
+	int		first_valid = -1;
 
-    printf("%2d  ", ttl);
+	printf("%2d  ", ttl);
 
-    any_valid = 0;
-    for (i = 0; i < 3; i++)
-    {
-        if (responses[i].valid)
-        {
-            any_valid = 1;
-            break;
-        }
-    }
+	// Buscar el primer probe válido para mostrar IP/nombre
+	for (i = 0; i < num_probes; i++)
+	{
+		if (responses[i].valid)
+		{
+			first_valid = i;
+			break;
+		}
+	}
 
-    if (any_valid)
-    {
-        first_ip = NULL;
-        for (i = 0; i < 3; i++)
-        {
-            if (responses[i].valid && !first_ip)
-            {
-                first_ip = inet_ntoa(responses[i].from_addr);
-				// Intenta resolucion DNS inversa
-                char host[NI_MAXHOST];
-                struct sockaddr_in sa;
-                ft_memset(&sa, 0, sizeof(sa));
-                sa.sin_family = AF_INET;
-                sa.sin_addr = responses[i].from_addr;
+	if (first_valid != -1)
+	{
+		// resolucion DNS inversa
+		char *first_ip = inet_ntoa(responses[first_valid].from_addr);
+		char host[NI_MAXHOST];
+		struct sockaddr_in sa;
+		ft_memset(&sa, 0, sizeof(sa));
+		sa.sin_family = AF_INET;
+		sa.sin_addr = responses[first_valid].from_addr;
+		if (getnameinfo((struct sockaddr *)&sa, sizeof(sa),
+				host, sizeof(host), NULL, 0, NI_NAMEREQD) == 0)
+			printf("%s (%s)  ", host, first_ip);
+		else
+			printf("%s  ", first_ip);
+	}
+	else
+	{
+		printf("* ");
+	}
 
-                if (getnameinfo((struct sockaddr *)&sa, sizeof(sa),
-                        host, sizeof(host), NULL, 0, NI_NAMEREQD) == 0)
-                    printf("%s (%s)  ", host, first_ip);
-                else
-                    printf("%s  ", first_ip);
-                break;
-            }
-        }
-
-        for (i = 0; i < 3; i++)
-        {
-            if (responses[i].valid)
-                printf("%.3f ms  ", responses[i].time_ms);
-            else
-                printf("* ");
-        }
-    }
-    else
-    {
-        printf("* * *");
-    }
-    printf("\n");
+	// Mostrar tiempos o asteriscos solo para los probes enviados
+	for (i = 0; i < num_probes; i++)
+	{
+		if (responses[i].valid)
+			printf("%.3f ms  ", responses[i].time_ms);
+		else
+			printf("* ");
+	}
+	printf("\n");
 }
 
 double calculate_time(struct timeval *start, struct timeval *end)

@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:06:25 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/26 09:32:49 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 10:51:16 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_args
 	int				show_help;	// --help
 	int				max_ttl;	// -m <max ttl>
 	int				port;		// Puerto UDP de destino
+	int				num_probes;	// Numero de paquetes enviaodo
 
 	// destino
 	char			*target;		/* target argv sin procesar */

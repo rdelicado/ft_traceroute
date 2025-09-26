@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:05:02 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/26 09:40:03 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 10:58:07 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	print_help()
 		"Options:",
 		"   <destination>\t\tThe host to traceroute to",
 		"   --help\t\t\tRead this help and exit",
-		"   -p <port>\t\tSet the base UDP destination port (default 33434)",
-		"   -m <max_ttl>\t\tSet the max number of hops (max TTL to be reached). Default is 30",
+		"   -p <port>\t\t\tSet the base UDP destination port (default 33434)",
+		"   -m <max_ttl>\t\t\tSet the max number of hops (max TTL to be reached). Default is 30",
+		"   -q <num_probes>\t\tSet number of probes per hop (defult: 3, max: 10)",
 		NULL	
 	};
 	
