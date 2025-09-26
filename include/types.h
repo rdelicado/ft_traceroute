@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:06:25 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/25 11:20:37 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 09:05:05 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ typedef struct s_icmp_response
 typedef struct s_args
 {
 	// opciones de flag
-	int	show_help;
+	int				show_help;	// --help
+	int				max_ttl;	// -m <max ttl>
 
 	// destino
 	char			*target;		/* target argv sin procesar */

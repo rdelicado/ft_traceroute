@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:02:20 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/25 11:40:55 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 08:52:15 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@
 #include <netinet/ip.h>
 #include <netinet/ip_icmp.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 
 #endif

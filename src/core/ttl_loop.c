@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:09:12 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/25 11:40:55 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 09:30:15 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void ttl_loop(int send_sock, int recv_sock, t_args *args)
 {
 	int ttl;
 
-	for (ttl = 1; ttl <= 30; ttl++)
+	for (ttl = 1; ttl <= args->max_ttl; ttl++) // incluido (-m) <max_ttl>
 	{
 		//configurar TTL
 		if (set_socket_ttl(send_sock, ttl) < 0)

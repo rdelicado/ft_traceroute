@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:53:49 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/25 11:53:26 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 09:01:53 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,59 @@
 
 void	display_hop(int ttl, t_icmp_response responses[3])
 {
-	int		i;
-	char	*first_ip;
-	int		any_valid;
+    int		i;
+    char	*first_ip;
+    int		any_valid;
 
-	printf("%2d  ", ttl);
-	
-	// Verificar si hay alguna respuesta válida
-	any_valid = 0;
-	for (i = 0; i < 3; i++)
-	{
-		if (responses[i].valid)
-		{
-			any_valid = 1;
-			break;
-		}
-	}
-	
-	// Si hay respuestas válidas, mostrar IP + tiempos
-	if (any_valid)
-	{
-		// Mostrar IP del primer router que respondió
-		first_ip = NULL;
-		for (i = 0; i < 3; i++)
-		{
-			if (responses[i].valid && !first_ip)
-			{
-				first_ip = inet_ntoa(responses[i].from_addr);
-				printf("%s  ", first_ip);
-				break;
-			}
-		}
+    printf("%2d  ", ttl);
 
-		// Mostrar tiempos
-		for (i = 0; i < 3; i++)
-		{
-			if (responses[i].valid)
-				printf("%.3f ms  ", responses[i].time_ms);
-			else
-				printf("* ");
-		}
-	}
-	else
-	{
-		// Si no hay respuestas válidas, solo mostrar 3 asteriscos
-		printf("* * *");
-	}
-	printf("\n");
+    any_valid = 0;
+    for (i = 0; i < 3; i++)
+    {
+        if (responses[i].valid)
+        {
+            any_valid = 1;
+            break;
+        }
+    }
+
+    if (any_valid)
+    {
+        first_ip = NULL;
+        for (i = 0; i < 3; i++)
+        {
+            if (responses[i].valid && !first_ip)
+            {
+                first_ip = inet_ntoa(responses[i].from_addr);
+				// Intenta resolucion DNS inversa
+                char host[NI_MAXHOST];
+                struct sockaddr_in sa;
+                ft_memset(&sa, 0, sizeof(sa));
+                sa.sin_family = AF_INET;
+                sa.sin_addr = responses[i].from_addr;
+
+                if (getnameinfo((struct sockaddr *)&sa, sizeof(sa),
+                        host, sizeof(host), NULL, 0, NI_NAMEREQD) == 0)
+                    printf("%s (%s)  ", host, first_ip);
+                else
+                    printf("%s  ", first_ip);
+                break;
+            }
+        }
+
+        for (i = 0; i < 3; i++)
+        {
+            if (responses[i].valid)
+                printf("%.3f ms  ", responses[i].time_ms);
+            else
+                printf("* ");
+        }
+    }
+    else
+    {
+        printf("* * *");
+    }
+    printf("\n");
 }
 
 double calculate_time(struct timeval *start, struct timeval *end)

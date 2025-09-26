@@ -40,3 +40,35 @@ void	*ft_memset(void *s, int c, size_t n)
 	}
 	return (s);
 }
+
+int	ft_atoi(const char *str)
+{
+	int	num;
+	int	sign;
+
+	sign = 1;
+	num = 0;
+	while (*str == ' ' || *str == '\t' || *str == '\r' || *str == '\v' \
+	|| *str == '\n' || *str == '\f')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (ft_isdigit(*str))
+	{
+		if (*str >= '0' && *str <= '9')
+			num = num * 10 + (*str - '0');
+		str++;
+	}
+	return (num * sign);
+}
+
+int	ft_isdigit(int c)
+{
+	if ((unsigned char)(c >= '0' && c <= '9'))
+		return (1);
+	return (0);
+}
