@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:53:49 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/26 11:06:05 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:25:22 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ double calculate_time(struct timeval *start, struct timeval *end)
 			((end->tv_usec - start->tv_usec) / 1000.0);
 }
 
-int	receive_icmp_response(int recv_sock, struct timeval *start_time, t_icmp_response *response)
+int	receive_icmp_response(int recv_sock, struct timeval *start_time, t_icmp_response *response, t_args *args)
 {
 	struct sockaddr_in	from_addr;
 	socklen_t			from_len;
@@ -81,10 +81,10 @@ int	receive_icmp_response(int recv_sock, struct timeval *start_time, t_icmp_resp
 	response->valid = 0;
 	response->time_ms = -1;
 
-	// Configurar select para timeout (5 segundos como traceroute real)
+	// Configurar select para timeout personalizable
 	FD_ZERO(&readfds);
 	FD_SET(recv_sock, &readfds);
-	timeout.tv_sec = 5;
+	timeout.tv_sec = args->timeout;
 	timeout.tv_usec = 0;
 
 	if (select(recv_sock + 1, &readfds, NULL, NULL, &timeout) > 0)
@@ -112,8 +112,8 @@ int	receive_icmp_response(int recv_sock, struct timeval *start_time, t_icmp_resp
 			// Calcular tiempo de respuesta
 			response->time_ms = calculate_time(start_time, &end_time);
 			
-			// Validar tiempo razonable (máximo 5000ms = timeout)
-			if (response->time_ms > 5000.0 || response->time_ms < 0.0)
+			// Validar tiempo razonable (máximo timeout*1000ms)
+			if (response->time_ms > (args->timeout * 1000.0) || response->time_ms < 0.0)
 				response->time_ms = -1; // Marcar como inválido
 			
 			// Extraer IP del router que respondió

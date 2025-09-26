@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:09:12 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/26 11:07:58 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:19:19 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int process_hop(int send_sock, int recv_sock, t_args *args, int ttl)
 		}
 
 		// Recibir respuesta
-		if (receive_icmp_response(recv_sock, &start_time, &icmp_responses[i]))
+		if (receive_icmp_response(recv_sock, &start_time, &icmp_responses[i], args))
 		{
 			responses++;
 			

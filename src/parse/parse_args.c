@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 17:37:19 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/26 10:58:59 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:13:23 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	setup_default_values(t_args *args)
 	args->max_ttl = 30; // 30 saltos por defecto 
 	args->port = 33434; // Puerto UDP por defecto
 	args->num_probes = 3; // 3 paquetes por defecto
+	args->timeout = 5; // 5 sg por defecto
 }
 
 void parse_arguments(t_args *args, int ac, char **av)
@@ -89,6 +90,22 @@ void parse_arguments(t_args *args, int ac, char **av)
 			if (args->num_probes < 1 || args->num_probes > 10)
 			{
 				printf("ft_traceroute: invalid number of probes '%d'. Must be between 1 and 10\n", args->num_probes);
+				exit(1);
+			}
+			i += 2;
+			continue;
+		}
+		else if (ft_strcmp(av[i], "-t") == 0)
+		{
+			if (i + 1 >= ac)
+			{
+				printf("ft_traceroute: option '-t' requires an argument\n");
+				exit(1);
+			}
+			args->timeout = ft_atoi(av[i + 1]);
+			if (args->timeout < 1 || args->timeout > 60)
+			{
+				printf("ft_traceroute: invalid timeout '%d'. Must be between 1 and 60 seconds\n", args->timeout);
 				exit(1);
 			}
 			i += 2;
