@@ -6,7 +6,7 @@
 /*   By: rdelicad <rdelicad@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:09:12 by rdelicad          #+#    #+#             */
-/*   Updated: 2025/09/26 09:30:15 by rdelicad         ###   ########.fr       */
+/*   Updated: 2025/09/26 10:00:14 by rdelicad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 static void print_traceroute_header(t_args *args)
 {
 	if (args->hostname)
-		printf("ft_traceroute to %s (%s), 30 hops max,  60 byte packets\n",
-			args->hostname, args->dest_ip);
+		printf("ft_traceroute to %s (%s), %d hops max,  60 byte packets\n",
+			args->hostname, args->dest_ip, args->max_ttl);
 	else
-		printf("ft_traceroute to %s, 30 hops max, 60 byte packets\n",
-			args->dest_ip);
+		printf("ft_traceroute to %s, %d hops max, 60 byte packets\n",
+			args->dest_ip, args->max_ttl);
 }
 
 static int process_hop(int send_sock, int recv_sock, t_args *args, int ttl)
@@ -31,12 +31,14 @@ static int process_hop(int send_sock, int recv_sock, t_args *args, int ttl)
 	struct timeval		start_time;
 	t_icmp_response		icmp_responses[3];
 	int					reached_dest;
+	int					port;
 
 	// configurar direccion destino
 	ft_memset(&dest_addr, 0, sizeof(dest_addr));
 	dest_addr.sin_family = AF_INET;
 	dest_addr.sin_addr = args->dest_addr;
-	dest_addr.sin_port = htons(33434 + ttl); // puerto UDP alto
+	port = args->port + ttl; // 
+	dest_addr.sin_port = htons(port); // puerto UDP por defecto 33434
 
 	// Llenar buffer con datos (como traceroute real)
 	ft_memset(buffer, 0x40 + ttl, sizeof(buffer));
@@ -82,7 +84,7 @@ static void ttl_loop(int send_sock, int recv_sock, t_args *args)
 {
 	int ttl;
 
-	for (ttl = 1; ttl <= args->max_ttl; ttl++) // incluido (-m) <max_ttl>
+	for (ttl = 1; ttl <= args->max_ttl; ttl++)
 	{
 		//configurar TTL
 		if (set_socket_ttl(send_sock, ttl) < 0)
